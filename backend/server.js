@@ -5,11 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 app.get('/', (req, res) => {
-  res.status(200).send('/Route');
+  res.status(200).send('Simple get request on route /');
 });
 
-const port = process.env.PORT || 5000;
-
-app.listen(port, () => {
-  console.log('Server started listening!');
-});
+module.exports = app;
