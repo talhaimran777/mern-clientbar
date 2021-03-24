@@ -20,7 +20,7 @@ const Signup = () => {
     const postData = async () => {
       try {
         let res = await axios.post('/signup', state);
-        console.log(res);
+        // console.log(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -36,7 +36,7 @@ const Signup = () => {
 
   return (
     <div className='row'>
-      <div className='col col-md-6 mx-auto'>
+      <div className='col col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto'>
         <form onSubmit={handleSubmit}>
           <h1 className='text-center'>SIGNUP FORM</h1>
 
