@@ -10,6 +10,7 @@ const signupReducer = (state = { registered: false }, action) => {
         ...state,
         status: 'SUCCESS',
         registered: true,
+        errors: [],
       };
     case 'REGISTRATION_FAILURE':
       return {

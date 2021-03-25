@@ -13,7 +13,7 @@ const Signup = () => {
     password: '',
   };
 
-  const { status } = useSelector((state) => state.signup);
+  const { status, errors } = useSelector((state) => state.signup);
 
   const dispatch = useDispatch();
 
@@ -42,7 +42,6 @@ const Signup = () => {
           type: 'REGISTRATION_FAILURE',
           payload: errors,
         });
-        console.log(errors);
       }
     };
 
@@ -83,13 +82,40 @@ const Signup = () => {
             label='Enter Password: '
           />
 
-          {status === 'IN_PROCESS' && (
+          {/* {status === 'IN_PROCESS' && (
             <div className='d-flex justify-content-center'>
               <div className='spinner-border' role='status'>
                 <span className='sr-only'></span>
               </div>
             </div>
+          )} */}
+
+          {status === 'IN_PROCESS' ? (
+            <div className='d-flex justify-content-center'>
+              <div className='spinner-border' role='status'>
+                <span className='sr-only'></span>
+              </div>
+            </div>
+          ) : (
+            ''
           )}
+
+          {status === 'SUCCESS' ? (
+            <div className='alert alert-success' role='alert'>
+              You have been registered!
+            </div>
+          ) : (
+            ''
+          )}
+
+          {errors
+            ? errors.map((error) => (
+                <div className='alert alert-danger' role='alert'>
+                  {error.msg}
+                </div>
+              ))
+            : ''}
+
           <button className='btn btn-primary btn-lg w-100'>Signup</button>
         </form>
       </div>
