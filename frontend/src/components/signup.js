@@ -37,7 +37,6 @@ const Signup = () => {
         }
       } catch (err) {
         const { errors } = err.response.data;
-
         dispatch({
           type: 'REGISTRATION_FAILURE',
           payload: errors,
@@ -48,41 +47,46 @@ const Signup = () => {
     let { name, email, password } = state;
 
     if (name && email && password) {
-      // axios.post('/signup');
       postData();
     }
   };
 
   return (
     <div className='row'>
-      <div className='col col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto'>
-        <form onSubmit={handleSubmit}>
-          <h1 className='text-center'>SIGNUP FORM</h1>
+      <div className='col col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto py-5'>
+        <div className='card'>
+          <div className='card-body'>
+            <form onSubmit={handleSubmit}>
+              <h1 className='text-center text-primary mb-4'>
+                <strong>Get Registered</strong>
+              </h1>
 
-          <FormGroup
-            state={state}
-            setState={setState}
-            type='text'
-            purpose='name'
-            label='Enter Name: '
-          />
-          <FormGroup
-            state={state}
-            setState={setState}
-            type='text'
-            purpose='email'
-            label='Enter Email: '
-          />
-          <FormGroup
-            state={state}
-            setState={setState}
-            classes='mb-4'
-            type='password'
-            purpose='password'
-            label='Enter Password: '
-          />
+              <FormGroup
+                state={state}
+                setState={setState}
+                type='text'
+                purpose='name'
+                label='Enter Name: '
+              />
+              <br />
+              <FormGroup
+                state={state}
+                setState={setState}
+                type='text'
+                purpose='email'
+                label='Enter Email: '
+              />
+              <br />
+              <FormGroup
+                state={state}
+                setState={setState}
+                classes='mb-4'
+                type='password'
+                purpose='password'
+                label='Enter Password: '
+              />
 
-          {/* {status === 'IN_PROCESS' && (
+              {/* {status === 'IN_PROCESS' && (
             <div className='d-flex justify-content-center'>
               <div className='spinner-border' role='status'>
                 <span className='sr-only'></span>
@@ -90,34 +94,36 @@ const Signup = () => {
             </div>
           )} */}
 
-          {status === 'IN_PROCESS' ? (
-            <div className='d-flex justify-content-center'>
-              <div className='spinner-border' role='status'>
-                <span className='sr-only'></span>
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
-
-          {status === 'SUCCESS' ? (
-            <div className='alert alert-success' role='alert'>
-              You have been registered!
-            </div>
-          ) : (
-            ''
-          )}
-
-          {errors
-            ? errors.map((error) => (
-                <div className='alert alert-danger' role='alert'>
-                  {error.msg}
+              {status === 'IN_PROCESS' ? (
+                <div className='d-flex justify-content-center'>
+                  <div className='spinner-border' role='status'>
+                    <span className='sr-only'></span>
+                  </div>
                 </div>
-              ))
-            : ''}
+              ) : (
+                ''
+              )}
 
-          <button className='btn btn-primary btn-lg w-100'>Signup</button>
-        </form>
+              {status === 'SUCCESS' ? (
+                <div className='alert alert-success' role='alert'>
+                  You have been registered!
+                </div>
+              ) : (
+                ''
+              )}
+
+              {errors
+                ? errors.map((error) => (
+                    <div className='alert alert-danger' role='alert'>
+                      {error.msg}
+                    </div>
+                  ))
+                : ''}
+
+              <button className='btn btn-primary btn-lg w-100'>Signup</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );

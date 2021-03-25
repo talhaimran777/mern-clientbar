@@ -13,7 +13,7 @@ const FormGroup = (props) => {
         onChange={onChangeHandler.bind(this, state, setState)}
         name={purpose}
         type={type}
-        required='true'
+        required={true}
         className='form-control'
       />
     </div>
