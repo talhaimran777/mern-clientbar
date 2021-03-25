@@ -28,7 +28,7 @@ const Signup = () => {
 
     const postData = async () => {
       try {
-        let res = await axios.post('/signup', state);
+        let res = await axios.post('/api/signup', state);
 
         if (res.data) {
           dispatch({

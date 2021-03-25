@@ -10,7 +10,7 @@ dotenv.config();
 app.use(express.json());
 
 // USING USERS ROUTES
-app.use(usersRoute);
+app.use('/api',usersRoute);
 
 app.get('/', (req, res) => {
   res.status(200).send('Simple get request on route /');

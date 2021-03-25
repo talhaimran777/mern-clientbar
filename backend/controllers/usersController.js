@@ -1,4 +1,5 @@
-const { body, validationResult } = require('express-validator');
+const User = require('../models/User');
+const registerUser = async (user) => {};
 
 const signup = (req, res) => {
   let { name, email, password } = req.body;
