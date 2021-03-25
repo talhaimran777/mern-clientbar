@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 // MINI-COMPONENT
@@ -12,17 +13,36 @@ const Signup = () => {
     password: '',
   };
 
+  const { status } = useSelector((state) => state.signup);
+
+  const dispatch = useDispatch();
+
   const [state, setState] = useState(initialState);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    dispatch({
+      type: 'REGISTRATION_REQUEST',
+    });
+
     const postData = async () => {
       try {
         let res = await axios.post('/signup', state);
-        // console.log(res.data);
+
+        if (res.data) {
+          dispatch({
+            type: 'REGISTRATION_SUCCESS',
+          });
+        }
       } catch (err) {
-        console.log(err);
+        const { errors } = err.response.data;
+
+        dispatch({
+          type: 'REGISTRATION_FAILURE',
+          payload: errors,
+        });
+        console.log(errors);
       }
     };
 
@@ -63,6 +83,13 @@ const Signup = () => {
             label='Enter Password: '
           />
 
+          {status === 'IN_PROCESS' && (
+            <div className='d-flex justify-content-center'>
+              <div className='spinner-border' role='status'>
+                <span className='sr-only'></span>
+              </div>
+            </div>
+          )}
           <button className='btn btn-primary btn-lg w-100'>Signup</button>
         </form>
       </div>

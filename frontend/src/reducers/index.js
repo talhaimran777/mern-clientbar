@@ -2,8 +2,10 @@
 
 import { combineReducers } from 'redux';
 import counterReducer from './counterReducer';
+import signupReducer from './signupReducer';
 
 let rootReducer = combineReducers({
+  signup: signupReducer,
   counter: counterReducer,
 });
 
