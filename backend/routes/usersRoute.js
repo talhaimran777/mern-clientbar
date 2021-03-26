@@ -2,10 +2,10 @@ const { body } = require('express-validator');
 const express = require('express');
 
 // CONTROLLERS
-const { signup } = require('../controllers/usersController');
+const { signup, login } = require('../controllers/usersController');
 
 // MIDDLEWARES
-const { checkSignup } = require('../middlewares/users');
+const { checkSignup, checkLogin } = require('../middlewares/users');
 
 let router = express.Router();
 
@@ -23,6 +23,14 @@ router
       ),
     checkSignup,
     signup
+  );
+
+router
+  .route('/login')
+  .post(
+    body('email').isEmail().withMessage('You must enter a valid email!'),
+    checkLogin,
+    login
   );
 
 module.exports = router;
