@@ -11,6 +11,7 @@ const signupReducer = (state = { registered: false }, action) => {
         status: 'SUCCESS',
         registered: true,
         errors: [],
+        user: action.payload,
       };
     case 'REGISTRATION_FAILURE':
       return {

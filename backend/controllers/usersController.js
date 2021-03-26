@@ -1,5 +1,8 @@
 const User = require('../models/User');
-const registerUser = async (user) => {};
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -7,10 +10,16 @@ const signup = async (req, res) => {
     let user = await User.findOne({ email });
     if (user === null) {
       let createdUser = await User.create(req.body);
-      res.status(201).json({
-        status: 'Success',
-        data: createdUser,
+
+      // WE WILL GENEREATE A JWT
+
+      let key = process.env.KEY;
+
+      let token = await jwt.sign({ user: createdUser._id }, key, {
+        expiresIn: '1hr',
       });
+
+      res.status(201).json({ status: 'Success', token: token });
     } else {
       let errors = [];
 

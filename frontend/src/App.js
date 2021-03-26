@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 // COMPONENTS
+import Navbar from './components/navbar';
 import Signup from './components/signup';
 import Login from './components/login';
 import Dashboard from './components/dashboard';
@@ -24,12 +25,13 @@ function App() {
 
   let counter = useSelector((state) => state.counter);
   return (
-    <div className='App container'>
+    <div className='App'>
       {/* <button onClick={incrementCounter}>+</button>
       <h1>{counter}</h1>
       <button onClick={decrementCounter}>-</button> */}
 
       <Router>
+        <Navbar />
         <Switch>
           <Route exact path='/' component={Dashboard} />
           <Route exact path='/signup' component={Signup} />

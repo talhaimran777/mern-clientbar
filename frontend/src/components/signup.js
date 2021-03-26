@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import React from 'react';
+// import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 // MINI-COMPONENT
 import FormGroup from './minicomponents/formGroup';
 
-const Signup = () => {
+const Signup = (props) => {
+  let { history } = props;
   let initialState = {
     name: '',
     email: '',
     password: '',
   };
 
-  const { status, errors } = useSelector((state) => state.signup);
+  const { status, errors, user } = useSelector((state) => state.signup);
 
   const dispatch = useDispatch();
 
@@ -33,6 +35,7 @@ const Signup = () => {
         if (res.data) {
           dispatch({
             type: 'REGISTRATION_SUCCESS',
+            payload: res.data,
           });
         }
       } catch (err) {
