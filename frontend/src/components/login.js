@@ -40,6 +40,8 @@ const Login = () => {
             type: 'LOGIN_SUCCESS',
             payload: res.data,
           });
+
+          localStorage.setItem('user', res.data);
         }
       } catch (err) {
         const { errors } = err.response.data;

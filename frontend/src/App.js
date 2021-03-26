@@ -6,6 +6,9 @@ import Signup from './components/signup';
 import Login from './components/login';
 import Dashboard from './components/dashboard';
 
+// FOR PRIVATE ROUTE
+import PrivateRoute from './components/minicomponents/privateRoute';
+
 import store from './store';
 import { useSelector } from 'react-redux';
 function App() {
@@ -24,6 +27,9 @@ function App() {
   };
 
   let counter = useSelector((state) => state.counter);
+  let { user } = useSelector((state) => state.login);
+
+  // console.log('This time', user);
   return (
     <div className='App'>
       {/* <button onClick={incrementCounter}>+</button>
@@ -33,7 +39,7 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route exact path='/' component={Dashboard} />
+          <PrivateRoute exact path='/' component={Dashboard} />
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/login' component={Login} />
         </Switch>
