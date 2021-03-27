@@ -7,7 +7,7 @@ import Login from './components/login';
 import Dashboard from './components/dashboard';
 
 // FOR PRIVATE ROUTE
-import PrivateRoute from './components/minicomponents/privateRoute';
+import { PrivateRoute } from './components/minicomponents/privateRoute';
 
 import store from './store';
 import { useSelector } from 'react-redux';
