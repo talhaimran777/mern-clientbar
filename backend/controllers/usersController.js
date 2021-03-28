@@ -126,7 +126,12 @@ const login = async (req, res) => {
   }
 };
 
+const getLoggedInUserDetails = (req, res) => {
+  res.status(200).send('hello!');
+};
+
 module.exports = {
   signup,
   login,
+  getLoggedInUserDetails,
 };

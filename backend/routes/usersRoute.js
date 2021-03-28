@@ -9,6 +9,9 @@ const { checkSignup, checkLogin } = require('../middlewares/users');
 
 let router = express.Router();
 
+// Route for current user
+// router.route('/me').get(getLoggedInUserDetails);
+
 router
   .route('/signup')
   .post(
