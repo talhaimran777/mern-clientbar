@@ -1,7 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const navbar = () => {
+const Navbar = () => {
+  const { loggedIn } = useSelector((state) => state.login);
+
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
       <div className='container'>
@@ -22,11 +25,16 @@ const navbar = () => {
 
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           <ul className='navbar-nav ml-auto'>
-            <li className='nav-item'>
-              <Link className='nav-link' to='/'>
-                Dashboard
-              </Link>
-            </li>
+            {loggedIn ? (
+              <li className='nav-item'>
+                <Link className='nav-link' to='/'>
+                  Dashboard
+                </Link>
+              </li>
+            ) : (
+              ''
+            )}
+
             <li className='nav-item'>
               <Link className='nav-link' to='/login'>
                 login
@@ -44,4 +52,4 @@ const navbar = () => {
   );
 };
 
-export default navbar;
+export default Navbar;

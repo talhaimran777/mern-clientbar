@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
+import { Route, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-
+import AddClient from './addClient';
 // import { Route, Redirect } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -28,7 +29,6 @@ const Dashboard = () => {
       let response = await axios.get('/api/auth', config);
 
       const { data } = response;
-      console.log(data);
       dispatch({
         type: 'REQUEST_USER_SUCCESS',
         payload: data.data,
@@ -49,7 +49,10 @@ const Dashboard = () => {
             </div>
           </div>
         ) : showUser ? (
-          <h1>Hello, {requestedUser.name}</h1>
+          <div>
+            <h1>Hello, {requestedUser.name}</h1>
+            <Link to='/addClient'>Add Client</Link>
+          </div>
         ) : (
           ''
         )}

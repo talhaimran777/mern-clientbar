@@ -11,6 +11,7 @@ import { PrivateRoute } from './components/minicomponents/privateRoute';
 
 import store from './store';
 import { useSelector } from 'react-redux';
+import AddClient from './components/addClient';
 function App() {
   const incrementCounter = () => {
     // Dispatch INCREMENT ACTION
@@ -40,6 +41,7 @@ function App() {
         <Navbar />
         <Switch>
           <PrivateRoute exact path='/' component={Dashboard} />
+          <PrivateRoute exact path='/addClient' component={AddClient} />
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/login' component={Login} />
         </Switch>
