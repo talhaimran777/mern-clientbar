@@ -10,12 +10,12 @@ let schcema = mongoose.Schema({
     required: true,
   },
   email: { type: String, required: true },
-  clients: [
-    {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'Client',
-    },
-  ],
+  // clients: [
+  //   {
+  //     type: mongoose.SchemaTypes.ObjectId,
+  //     ref: 'Client',
+  //   },
+  // ],
 });
 
 let model = mongoose.model('User', schcema);

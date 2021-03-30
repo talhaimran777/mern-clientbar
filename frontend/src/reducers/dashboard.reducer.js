@@ -16,6 +16,23 @@ const dashboardReducer = (state = {}, action) => {
         showUser: false,
         requestedUser: {},
       };
+    case 'REQUEST_CLIENTS':
+      return {
+        ...state,
+        loadingClients: true,
+      };
+    case 'REQUEST_CLIENTS_SUCCESS':
+      return {
+        ...state,
+        loadingClients: false,
+        requestedClients: action.payload,
+      };
+    case 'REQUEST_CLIENTS_FAILURE':
+      return {
+        ...state,
+        loadingClients: false,
+        requestedClients: [],
+      };
 
     default:
       return state;
