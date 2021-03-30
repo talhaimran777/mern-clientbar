@@ -6,6 +6,10 @@ import FormGroup from './minicomponents/formGroup';
 const AddClient = () => {
   const { requestedUser } = useSelector((state) => state.dashboard);
 
+  const { user } = useSelector((state) => state.login);
+
+  const { token } = user;
+
   const { _id } = requestedUser;
 
   const submitHandler = async (state, e) => {
@@ -22,9 +26,16 @@ const AddClient = () => {
       admin: _id,
     };
     try {
-      let response = await axios.post('/api/clients', client);
+      const headers = {
+        'x-auth-token': token,
+      };
+      let response = await axios.post('/api/clients', client, {
+        headers,
+      });
 
-      console.log(response);
+      const { data } = response;
+
+      if (data) alert('Client Added Successfully!');
     } catch (err) {
       console.log(err);
     }

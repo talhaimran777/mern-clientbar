@@ -9,6 +9,13 @@ const dashboardReducer = (state = {}, action) => {
         showUser: true,
         requestedUser: action.payload,
       };
+    case 'REQUEST_USER_FAILED':
+      return {
+        ...state,
+        loadingUser: false,
+        showUser: false,
+        requestedUser: {},
+      };
 
     default:
       return state;
