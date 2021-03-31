@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   const { admin } = useSelector((state) => state.dashboard);
 
-  const [cookies] = useCookies(['user']);
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
   // USER CONTAINS TOKEN AND A SUCCESS MESSSAGE HERE
   const { user } = cookies;
@@ -51,7 +51,9 @@ const Navbar = () => {
 
             {user && admin ? (
               <li className='nav-item'>
-                <Link className='nav-link'>Logout</Link>
+                <Link onClick={() => removeCookie('user')} className='nav-link'>
+                  Logout
+                </Link>
               </li>
             ) : (
               ''

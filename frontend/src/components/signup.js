@@ -2,7 +2,7 @@ import { useState } from 'react';
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 // MINI-COMPONENT
