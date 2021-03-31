@@ -1,9 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  const { loggedIn } = useSelector((state) => state.login);
+  const { admin } = useSelector((state) => state.dashboard);
+
+  const [cookies] = useCookies(['user']);
+
+  // USER CONTAINS TOKEN AND A SUCCESS MESSSAGE HERE
+  const { user } = cookies;
 
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
@@ -25,17 +31,32 @@ const Navbar = () => {
 
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           <ul className='navbar-nav ml-auto'>
-            {loggedIn ? (
+            {user && admin ? (
               <li className='nav-item'>
-                <Link className='nav-link' to='/'>
-                  Dashboard
+                {' '}
+                <div className='nav-link'>{admin.email}</div>
+              </li>
+            ) : (
+              ''
+            )}
+            {user && admin ? (
+              <li className='nav-item'>
+                <Link className='nav-link' to='/addClient'>
+                  Add
                 </Link>
               </li>
             ) : (
               ''
             )}
 
-            <li className='nav-item'>
+            {user && admin ? (
+              <li className='nav-item'>
+                <Link className='nav-link'>Logout</Link>
+              </li>
+            ) : (
+              ''
+            )}
+            {/* <li className='nav-item'>
               <Link className='nav-link' to='/login'>
                 login
               </Link>
@@ -44,7 +65,7 @@ const Navbar = () => {
               <Link className='nav-link' to='/signup'>
                 Signup
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

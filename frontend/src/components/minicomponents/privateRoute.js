@@ -1,9 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 export const PrivateRoute = ({ component: Component, ...rest }) => {
-  let { user } = useSelector((state) => state.login);
+  // let { user } = useSelector((state) => state.login);
+  const [cookies] = useCookies(['user']);
+  const { user } = cookies;
   return (
     <Route
       {...rest}

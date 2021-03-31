@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
 // MINI-COMPONENT
@@ -14,6 +15,8 @@ const Login = () => {
   };
 
   const [state, setState] = useState(initialState);
+
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
   const dispatch = useDispatch();
 
@@ -41,7 +44,9 @@ const Login = () => {
             payload: res.data,
           });
 
-          localStorage.setItem('user', res.data);
+          setCookie('user', res.data, {
+            path: '/',
+          });
         }
       } catch (err) {
         const { errors } = err.response.data;

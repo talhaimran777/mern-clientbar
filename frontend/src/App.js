@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 // COMPONENTS
 import Navbar from './components/navbar';
@@ -36,16 +36,13 @@ function App() {
       {/* <button onClick={incrementCounter}>+</button>
       <h1>{counter}</h1>
       <button onClick={decrementCounter}>-</button> */}
-
-      <Router>
-        <Navbar />
-        <Switch>
-          <PrivateRoute exact path='/' component={Dashboard} />
-          <PrivateRoute exact path='/addClient' component={AddClient} />
-          <Route exact path='/signup' component={Signup} />
-          <Route exact path='/login' component={Login} />
-        </Switch>
-      </Router>
+      <Navbar />
+      <Switch>
+        <PrivateRoute exact path='/' component={Dashboard} />
+        <PrivateRoute exact path='/addClient' component={AddClient} />
+        <Route exact path='/signup' component={Signup} />
+        <Route exact path='/login' component={Login} />
+      </Switch>
     </div>
   );
 }

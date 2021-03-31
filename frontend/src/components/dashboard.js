@@ -1,43 +1,81 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchLoggedInUser, fetchClients } from '../actions/dashboard.actions';
+import { useCookies } from 'react-cookie';
+import { fetchLoggedInUserAndClients } from '../actions/dashboard.actions';
 // import AddClient from './addClient';
 // import { Route, Redirect } from 'react-router-dom';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const [cookies] = useCookies(['user']);
+  const { user } = cookies;
 
-  const { user } = useSelector((state) => state.login);
-  const {
-    loadingUser,
-    requestedUser,
-    showUser,
-    loadingClients,
-    requestedClients,
-  } = useSelector((state) => state.dashboard);
+  const { loadingData, clients, admin } = useSelector(
+    (state) => state.dashboard
+  );
 
   const { token } = user;
 
   useEffect(async () => {
-    await dispatch(fetchLoggedInUser(token));
-
-    await dispatch(fetchClients(token));
+    dispatch(fetchLoggedInUserAndClients(token, history));
   }, [dispatch]);
   return (
     <div className='dashboard'>
       <div className='container'>
-        {loadingUser ? (
+        {loadingData ? (
+          <div className='d-flex justify-content-center py-5 my-5'>
+            <div className='spinner-border' role='status'>
+              <span className='sr-only'></span>
+            </div>
+          </div>
+        ) : admin && clients ? (
+          <div>
+            <h2 className='mb-3'>Hello, {admin.name}</h2>
+
+            {clients.length ? (
+              <div className='table-responsive-lg'>
+                <table className='table table-striped mt-3'>
+                  <thead className='thead-inverse'>
+                    <tr>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Email</th>
+                      <th>Phone No</th>
+                      <th>Address</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {clients.map((client) => (
+                      <tr>
+                        <td>{client.firstName}</td>
+                        <td>{client.lastName}</td>
+                        <td>{client.email}</td>
+                        <td>{client.phone}</td>
+                        <td>{client.address}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
+        ) : (
+          ''
+        )}
+
+        {/* {loadingUser ? (
           <div className='d-flex justify-content-center'>
             <div className='spinner-border' role='status'>
               <span className='sr-only'></span>
             </div>
           </div>
         ) : showUser ? (
-          <div>
-            <h1>Hello, {requestedUser.name}</h1>
-            {/* <Link to='/addClient'>Add Client</Link> */}
-          </div>
+          <h1 className='mb-3'>Hello, {requestedUser.name}</h1>
         ) : (
           ''
         )}
@@ -49,7 +87,31 @@ const Dashboard = () => {
             </div>
           </div>
         ) : requestedClients && requestedClients.length ? (
-          <h4>Will show your clients here</h4>
+          <div className='table-responsive-lg'>
+            <table className='table table-striped mt-3'>
+              <thead className='thead-inverse'>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Phone No</th>
+                  <th>Address</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                {requestedClients.map((client) => (
+                  <tr>
+                    <td>{client.firstName}</td>
+                    <td>{client.lastName}</td>
+                    <td>{client.email}</td>
+                    <td>{client.phone}</td>
+                    <td>{client.address}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
           <div>
             <h3>You have not added any clients </h3>
@@ -57,7 +119,7 @@ const Dashboard = () => {
               Click this link to register your new client!
             </Link>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

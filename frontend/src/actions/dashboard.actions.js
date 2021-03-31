@@ -1,9 +1,5 @@
 import axios from 'axios';
-export const fetchLoggedInUser = (token) => async (dispatch) => {
-  dispatch({
-    type: 'REQUEST_USER',
-  });
-
+const fetchLoggedInUser = async (token, history) => {
   const headers = {
     'x-auth-token': token,
   };
@@ -11,20 +7,17 @@ export const fetchLoggedInUser = (token) => async (dispatch) => {
   try {
     let response = await axios.get('/api/auth', { headers });
     const { data } = response;
-    if (data)
-      dispatch({
-        type: 'REQUEST_USER_SUCCESS',
-        payload: data.data,
-      });
+    if (data.status === 'Failed!') {
+      console.log('Redirect To Login!');
+    }
+    console.log(data);
+    if (data) return data.data;
   } catch (err) {
-    dispatch({ type: 'REQUEST_USER_FAILED' });
+    // ALERT REDUCER WILL DO IT'S MAGIC RIGHT HERE
+    history.push('/login');
   }
 };
-export const fetchClients = (token) => async (dispatch) => {
-  dispatch({
-    type: 'REQUEST_CLIENTS',
-  });
-
+const fetchClients = async (token, history) => {
   const headers = {
     'x-auth-token': token,
   };
@@ -33,14 +26,30 @@ export const fetchClients = (token) => async (dispatch) => {
     let response = await axios.get('/api/clients', { headers });
     const { data } = response;
     // console.log(data);
-    if (data)
-      dispatch({
-        type: 'REQUEST_CLIENTS_SUCCESS',
-        payload: data.data,
-      });
+    if (data) return data.data;
   } catch (err) {
-    dispatch({
-      type: 'REQUEST_CLIENTS_FAILURE',
-    });
+    // ALERT REDUCER WILL DO IT'S MAGIC RIGHT HERE
+    history.push('/login');
+  }
+};
+export const fetchLoggedInUserAndClients = (token, history) => async (
+  dispatch
+) => {
+  dispatch({ type: 'REQUEST_DATA' });
+
+  try {
+    let user = await fetchLoggedInUser(token, history);
+    let clients = await fetchClients(token, history);
+    if (user && clients) {
+      dispatch({
+        type: 'REQUEST_DATA_SUCCESS',
+        payload: {
+          user,
+          clients,
+        },
+      });
+    }
+  } catch (err) {
+    dispatch({ type: 'REQUEST_DATA_FAILURE' });
   }
 };
