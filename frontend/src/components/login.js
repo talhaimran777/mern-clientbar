@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
@@ -9,6 +9,16 @@ import axios from 'axios';
 import FormGroup from './minicomponents/formGroup';
 
 const Login = () => {
+  const [cookies, setCookie] = useCookies(['user']);
+  const history = useHistory();
+
+  const { user } = cookies;
+
+  if (user) {
+    // REDIRECT TO DASHBOARD COMPONENT
+    history.push('/');
+  }
+
   let initialState = {
     email: '',
     password: '',
@@ -16,13 +26,7 @@ const Login = () => {
 
   const [state, setState] = useState(initialState);
 
-  const [cookies, setCookie, removeCookie] = useCookies(['user']);
-
   const dispatch = useDispatch();
-
-  // dispatch({
-  //   type: 'LOGIN_COMPONENT_REQUEST',
-  // });
 
   const { status, errors, loggedIn } = useSelector((state) => state.login);
 
@@ -50,7 +54,6 @@ const Login = () => {
         }
       } catch (err) {
         const { errors } = err.response.data;
-        console.log(errors);
         dispatch({
           type: 'LOGIN_FAILURE',
           payload: errors,
