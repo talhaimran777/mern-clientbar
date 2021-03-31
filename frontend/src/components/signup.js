@@ -1,21 +1,31 @@
 import { useState } from 'react';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 // MINI-COMPONENT
 import FormGroup from './minicomponents/formGroup';
 
-const Signup = (props) => {
-  let { history } = props;
+const Signup = () => {
+  const [cookies] = useCookies(['user']);
+  const history = useHistory();
+
+  const { user } = cookies;
+
+  if (user) {
+    // REDIRECT TO DASHBOARD COMPONENT
+    history.push('/');
+  }
+
   let initialState = {
     name: '',
     email: '',
     password: '',
   };
 
-  const { status, errors, user } = useSelector((state) => state.signup);
+  // const { status, errors, user } = useSelector((state) => state.signup);
 
   const dispatch = useDispatch();
 
@@ -98,7 +108,7 @@ const Signup = (props) => {
             </div>
           )} */}
 
-                {status === 'IN_PROCESS' ? (
+                {/* {status === 'IN_PROCESS' ? (
                   <div className='d-flex justify-content-center'>
                     <div className='spinner-border' role='status'>
                       <span className='sr-only'></span>
@@ -122,7 +132,7 @@ const Signup = (props) => {
                         {error.msg}
                       </div>
                     ))
-                  : ''}
+                  : ''} */}
 
                 <p>
                   Already a user? <Link to='/login'>Login</Link>

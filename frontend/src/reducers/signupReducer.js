@@ -1,4 +1,4 @@
-const signupReducer = (state = { registered: false }, action) => {
+const signupReducer = (state = {}, action) => {
   switch (action.type) {
     case 'REGISTRATION_REQUEST':
       return {
