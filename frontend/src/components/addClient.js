@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useAlert } from 'react-alert';
 import { useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import { useHistory } from 'react-router-dom';
@@ -17,6 +18,8 @@ const AddClient = () => {
   const { token } = user;
 
   const { _id } = admin;
+
+  const alert = useAlert();
 
   const submitHandler = async (state, e) => {
     e.preventDefault();
@@ -41,7 +44,7 @@ const AddClient = () => {
 
       const { data } = response;
 
-      if (data) alert('Client Added Successfully!');
+      if (data) alert.success('Client Added Successfully!', { timeout: 5000 });
       history.push('/');
     } catch (err) {
       console.log(err);
