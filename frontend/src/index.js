@@ -5,16 +5,30 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
-
 import store from './store';
+import { transitions, positions, Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
+
+// optional configuration for alerts
+const options = {
+  // you can also just use 'bottom center'
+  position: positions.BOTTOM_CENTER,
+  timeout: 5000,
+  offset: '30px',
+  // you can also just use 'scale'
+  transition: transitions.SCALE,
+};
+
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider>
-      <Router>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </Router>
+      <AlertProvider template={AlertTemplate} {...options}>
+        <Router>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </Router>
+      </AlertProvider>
     </CookiesProvider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -2,11 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
+import { useAlert } from 'react-alert';
 
 const Navbar = () => {
   const { admin } = useSelector((state) => state.dashboard);
 
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
+  const alert = useAlert();
 
   // USER CONTAINS TOKEN AND A SUCCESS MESSSAGE HERE
   const { user } = cookies;
@@ -51,7 +53,17 @@ const Navbar = () => {
 
             {user && admin ? (
               <li className='nav-item'>
-                <Link onClick={() => removeCookie('user')} className='nav-link'>
+                <Link
+                  onClick={() => {
+                    removeCookie('user', {
+                      path: '/',
+                    });
+                    alert.success('Log Out Successfull!', {
+                      timeout: 5000,
+                    });
+                  }}
+                  className='nav-link'
+                >
                   Logout
                 </Link>
               </li>

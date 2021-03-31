@@ -3,6 +3,7 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
+import { useAlert } from 'react-alert';
 import axios from 'axios';
 
 // MINI-COMPONENT
@@ -11,11 +12,10 @@ import FormGroup from './minicomponents/formGroup';
 const Login = () => {
   const [cookies, setCookie] = useCookies(['user']);
   const history = useHistory();
-
+  const alert = useAlert();
   const { user } = cookies;
 
   if (user) {
-    // REDIRECT TO DASHBOARD COMPONENT
     history.push('/');
   }
 
@@ -51,6 +51,8 @@ const Login = () => {
           setCookie('user', res.data, {
             path: '/',
           });
+
+          alert.success('Login SuccessFull!', { timeout: 5000 });
         }
       } catch (err) {
         const { errors } = err.response.data;
@@ -106,13 +108,13 @@ const Login = () => {
                   ''
                 )}
 
-                {status === 'SUCCESS' ? (
+                {/* {status === 'SUCCESS' ? (
                   <div className='alert alert-success' role='alert'>
                     Login Successfull!
                   </div>
                 ) : (
                   ''
-                )}
+                )} */}
 
                 {errors
                   ? errors.map((error) => (
@@ -122,16 +124,9 @@ const Login = () => {
                     ))
                   : ''}
 
-                {loggedIn ? (
-                  <p>
-                    Go to your dashboard <Link to='/'>Dashboard</Link>
-                  </p>
-                ) : (
-                  <p>
-                    Not yet registered? <Link to='/signup'>Signup</Link>
-                  </p>
-                )}
-
+                <p>
+                  Not yet registered? <Link to='/signup'>Signup</Link>
+                </p>
                 <button className='btn btn-primary btn-lg w-100'>Login</button>
               </form>
             </div>
