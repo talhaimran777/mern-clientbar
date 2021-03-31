@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
+import { useHistory } from 'react-router-dom';
 import FormGroup from './minicomponents/formGroup';
 
 const AddClient = () => {
-  const { requestedUser } = useSelector((state) => state.dashboard);
+  const history = useHistory();
 
-  const { user } = useSelector((state) => state.login);
+  const { admin } = useSelector((state) => state.dashboard);
+
+  const [cookies] = useCookies(['user']);
+
+  const { user } = cookies;
 
   const { token } = user;
 
-  const { _id } = requestedUser;
+  const { _id } = admin;
 
   const submitHandler = async (state, e) => {
     e.preventDefault();
@@ -36,6 +42,7 @@ const AddClient = () => {
       const { data } = response;
 
       if (data) alert('Client Added Successfully!');
+      history.push('/');
     } catch (err) {
       console.log(err);
     }

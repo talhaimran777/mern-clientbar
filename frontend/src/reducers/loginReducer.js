@@ -1,7 +1,5 @@
-const loginReducer = (state = { loggedIn: false }, action) => {
+const loginReducer = (state = {}, action) => {
   switch (action.type) {
-    case 'LOGIN_COMPONENT_REQUEST':
-      return {};
     case 'LOGIN_REQUEST':
       return {
         ...state,
